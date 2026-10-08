@@ -1,5 +1,6 @@
 package DDL.LAB.Backend;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -12,13 +13,19 @@ import java.util.Arrays;
 @Configuration
 public class CorsConfig {
 
+    @Value("${FRONTEND_URL:https://voice-agent-frontend-10ao.onrender.com}")
+    private String frontendUrl;
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(Arrays.asList(
-                "https://voice-agent-frontend-kis8.vercel.app",
-                "http://localhost:5173"
+        configuration.setAllowedOriginPatterns(Arrays.asList(
+                "https://voice-agent-frontend-10ao.onrender.com",
+                "https://*.onrender.com",
+                "http://localhost:*",
+                frontendUrl.trim()
         ));
 
         configuration.setAllowedMethods(Arrays.asList(
@@ -26,11 +33,24 @@ public class CorsConfig {
                 "POST",
                 "PUT",
                 "DELETE",
-                "OPTIONS"
+                "OPTIONS",
+                "PATCH"
         ));
 
-        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList(
+                "Origin",
+                "Content-Type",
+                "Accept",
+                "Authorization",
+                "X-Requested-With"
+        ));
+
+        configuration.setExposedHeaders(Arrays.asList(
+                "Content-Type"
+        ));
+
         configuration.setAllowCredentials(false);
+
         configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source =
@@ -44,6 +64,7 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter(
             CorsConfigurationSource corsConfigurationSource) {
+
         return new CorsFilter(corsConfigurationSource);
     }
 }
