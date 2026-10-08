@@ -6,7 +6,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/customers")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://voice-agent-frontend-10ao.onrender.com/")
 public class CustomerController {
 
     private final CustomerRepository customerRepository;

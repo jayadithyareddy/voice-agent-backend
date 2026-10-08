@@ -7,7 +7,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/followups")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://voice-agent-frontend-10ao.onrender.com/")
 public class FollowUpController {
 
     private final FollowUpRepository followUpRepository;

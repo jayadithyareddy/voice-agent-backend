@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://voice-agent-frontend-10ao.onrender.com/")
 public class AuthController {
 
     private final UserRepository userRepository;
