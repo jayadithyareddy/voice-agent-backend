@@ -31,8 +31,8 @@ public class ChatbotController {
     @Value("${CLAUDE_MAX_TOKENS:1024}")
     private int maxTokens;
 
-    public ChatbotController(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
+    public ChatbotController() {
+        this.objectMapper = new ObjectMapper();
         this.httpClient = HttpClient.newHttpClient();
     }
 
@@ -101,7 +101,9 @@ public class ChatbotController {
             );
 
             String requestBody =
-                    objectMapper.writeValueAsString(claudeRequest);
+                    objectMapper.writeValueAsString(
+                            claudeRequest
+                    );
 
             HttpRequest httpRequest =
                     HttpRequest.newBuilder()
@@ -139,7 +141,6 @@ public class ChatbotController {
                     response.statusCode() < 200
                     || response.statusCode() >= 300
             ) {
-
                 return ResponseEntity
                         .status(response.statusCode())
                         .body(
@@ -172,7 +173,6 @@ public class ChatbotController {
                                     item.path("type").asText()
                             )
                     ) {
-
                         replyBuilder.append(
                                 item.path("text").asText()
                         );
